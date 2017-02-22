@@ -21,10 +21,13 @@ public class DownloadService extends Service {
     private DownloadTask downloadTask;
     private String downloadUrl;
 
+    private int mProgress;
+
     private DownloadListener listener = new DownloadListener() {
         @Override
         public void onProgress(int progress) {
             getNotificationManager().notify(1, getNotification("下载中...", progress));
+            mProgress = progress;
         }
 
         @Override
@@ -105,6 +108,7 @@ public class DownloadService extends Service {
             if (downloadTask != null) {
                 downloadTask.pauseDownload();
             }
+            getNotificationManager().notify(1, getNotification("暂停下载", mProgress));
         }
 
         public void cancelDownload() {
