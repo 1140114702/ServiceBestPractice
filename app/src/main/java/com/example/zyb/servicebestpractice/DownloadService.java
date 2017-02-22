@@ -108,7 +108,9 @@ public class DownloadService extends Service {
             if (downloadTask != null) {
                 downloadTask.pauseDownload();
             }
-            getNotificationManager().notify(1, getNotification("暂停下载", mProgress));
+            if (mProgress > 0 && mProgress < 100) {
+                getNotificationManager().notify(1, getNotification("暂停下载", mProgress));
+            }
         }
 
         public void cancelDownload() {
