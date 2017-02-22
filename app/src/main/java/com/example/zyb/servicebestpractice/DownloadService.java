@@ -33,7 +33,7 @@ public class DownloadService extends Service {
         @Override
         public void onSuccess() {
             downloadTask = null;
-            //下载成功是将前台服务通知关闭，并创建一个下载成功的通知
+            //下载成功时将前台服务通知关闭，并创建一个下载成功的通知
             stopForeground(true);
             getNotificationManager().notify(1, getNotification("下载完成", -1));
             openFile();
@@ -99,7 +99,7 @@ public class DownloadService extends Service {
                 downloadUrl = url;
                 downloadTask = new DownloadTask(listener);
                 downloadTask.execute(downloadUrl);
-                startForeground(1, getNotification("下载中...", 0));
+                startForeground(1, getNotification("下载中...", 0)); //创建一个前台通知
                 Toast.makeText(DownloadService.this, "正在下载", Toast.LENGTH_SHORT).show();
             }
         }
@@ -136,7 +136,7 @@ public class DownloadService extends Service {
 
     private Notification getNotification(String title, int progress) {
         Intent intent = new Intent(this, MainActivity.class);
-        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, intent, 0); //通知点击跳转
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
